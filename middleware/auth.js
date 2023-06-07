@@ -1,5 +1,6 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
-export function authorize(req,res,next){
+module.exports.authorize = async(req,res,next) => {
     try {
         const token = req.cookies.token;
         if(!token) res.status(401).send({message:"Unauthorized!"});
@@ -7,6 +8,7 @@ export function authorize(req,res,next){
         req.user = payLoad;
         next();
     } catch (error) {
+        console.log(error);
         return res.status(500).send({message:'Internal Server Error',status:'failed',data:null})
     }
 }

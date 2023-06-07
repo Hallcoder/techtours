@@ -1,8 +1,9 @@
 const express = require('express');
-const { enroll } = require('../controllers/user.controller');
+const { enroll, login } = require('../controllers/user.controller');
+const { authorize } = require('../middleware/auth');
 const router = express.Router();
 
 router
-.post('/admin/enroll',enroll())
-
+.post('/enroll',authorize,enroll())
+.post('/login',login())
 module.exports.userRouter = router;

@@ -1,5 +1,7 @@
+require('dotenv').config();
 const { default: mongoose, Mongoose } = require("mongoose");
-
+const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 const userSchema = new mongoose.Schema({
     userName:{
         type:String,
@@ -30,10 +32,33 @@ const userSchema = new mongoose.Schema({
         maxlength:10,
         minlength:10
       },
-      role:{
+      isAdmin:{
+        type:Boolean,
+        required:[true, "Please mention whether the user is admin"]
+      },
+      OTP:{
         type:String,
-        required:[true, "Please assign a role to the user!"]
+        minlength:32
       }
-})
-
+});
+function validateUser(user,type){
+  const schema   = Joi.object({
+      username:Joi.string().min(1).required(),
+      email:Joi.string().email({tlds:{allow:false}}).required().min(5).required(),
+      password:Joi.string().min(6).max(15).required()
+  })
+  if(type === 'login'){
+      let schema = Joi.object({
+          email:Joi.string().email({tlds:{allow:false}}).required().min(5).required(),
+          password:Joi.string().min(6).max(15).required()
+      })
+      return schema.validate(user);
+  }
+  return schema.validate(user);
+}
+userSchema.methods.generateAuthToken = function(isAdmin){
+let token = jwt.sign(JSON.stringify({_id:this._id,email:this.email,isAdmin:true}),process.env.JWT_PRIVATE_KEY)
+return token
+}
 module.exports.User = new mongoose.model('User',userSchema);
+module.exports.validate = validateUser;
