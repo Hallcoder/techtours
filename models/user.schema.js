@@ -2,6 +2,7 @@ require('dotenv').config();
 const { default: mongoose, Mongoose } = require("mongoose");
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
+const { registerSchema } = require('swaggiffy');
 const userSchema = new mongoose.Schema({
     userName:{
         type:String,
@@ -41,6 +42,8 @@ const userSchema = new mongoose.Schema({
         minlength:32
       }
 });
+
+registerSchema('User',userSchema,{orm:'mongoose'})
 function validateUser(user,type){
   const schema   = Joi.object({
       username:Joi.string().min(1).required(),

@@ -193,20 +193,24 @@ module.exports.createAdmin = () => {
         return res.status(202).send({
           message:'Admin created',
           displayMessage:"",
-          data:user,
+          data:_.pick("userName","email","tel"),
           status:"Failed"
         })
       })
-    } catch (error) {
-      console.log(error)
-      return res
-        .status(500)
-        .send({
-          message: "Admin creation failed!",
-          displayMessage: "Failure to create admin",
-          data: null,
+    } catch (err) {
+      console.log(err)
+      if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
+        res.status(400).json({
+          message: "Email is taken!",
           status: "Failed",
+          displayMessage: "",
+          data: null,
         });
+      } else {
+        // Handle other types of errors
+        console.log(err);
+        res.status(500).json({ error: "Failed to create admin." });
+      }
     }
   };
 };

@@ -1,0 +1,72 @@
+{
+  "swaggerDefinition": {
+    "swagger": "2.0",
+    "info": {
+      "title": "techtours",
+      "description": "techtours API Documentation",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "name": "API Support",
+        "url": "http://www.swagger.io/support",
+        "email": "support@swagger.io"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      },
+      "version": "1.0.0"
+    },
+    "host": "localhost:PORT",
+    "basePath": "/",
+    "schemes": [
+      "http"
+    ],
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "paths": {},
+    "definitions": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "example": "string"
+          },
+          "password": {
+            "type": "string",
+            "example": "string"
+          },
+          "email": {
+            "type": "string",
+            "example": "string"
+          },
+          "fullName": {
+            "type": "string",
+            "example": "string"
+          },
+          "tel": {
+            "type": "string",
+            "example": "string"
+          },
+          "isAdmin": {
+            "type": "boolean",
+            "example": false
+          },
+          "OTP": {
+            "type": "string",
+            "example": "string"
+          },
+          "_id": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "apis": []
+}
