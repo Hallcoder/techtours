@@ -6,14 +6,13 @@ const { userRouter } = require('./routers/user.router');
 const { User } = require('./models/user.schema');
 const app = express();
 const PORT = process.env.PORT || 4000;
-app.listen(PORT,()=>{
-    console.log('Listening on port ', PORT);
-})
-db();
 app.use(express.json({limit:'250mb'}));
 app.use('/user',userRouter)
 app.get('/',(req,res)=>{
-res.send('Hello Broo/Sis!')
-new Swaggiffy().setupExpress(app).swaggiffy();
-registerDefinition(userRouter,{tags:'Users',mappedSchema:'User',basePath:'/user'});
+    res.send('Hello Broo/Sis!')
 })
+app.listen(PORT,()=>{
+    console.log('Listening on port ', PORT);
+    db();
+})
+new Swaggiffy().setupExpress(app).swaggiffy();
