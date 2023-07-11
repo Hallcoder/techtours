@@ -232,7 +232,23 @@ module.exports.getUserById = () => {
         status:"Success"
       })
     } catch (error) {
-      res.status(500).json({ error: "Something went wrong!" , message:error.message});
+     return res.status(500).json({ error: "Something went wrong!" , message:error.message});
+    }
+  }
+}
+
+module.exports.getUsers = () => {
+  return async(req,res) => {
+    try {
+      const users = await User.find({});
+      return res.status(202).send({
+        message:"Users' array",
+        displayMessage:"",
+        data:users,
+        status:"Success"
+      })
+    } catch (error) {
+      return res.status(500).json({error:"Something went wrong!", message:error.message})
     }
   }
 }

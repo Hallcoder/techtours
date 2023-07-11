@@ -9,5 +9,6 @@ router
 .post('/admin/enroll',createAdmin())
 .post('/login',login())
 .get('/id',getUserById())
+.get('/',get)
 registerDefinition(router, {tags: 'Users', mappedSchema: 'User', basePath: '/user'});
 module.exports.userRouter = router;
