@@ -193,7 +193,7 @@ module.exports.createAdmin = () => {
         return res.status(202).send({
           message:'Admin created',
           displayMessage:"",
-          data:_.pick("userName","email","tel"),
+          data:_.pick("userName","email","tel",user),
           status:"Failed"
         })
       })
@@ -214,3 +214,25 @@ module.exports.createAdmin = () => {
     }
   };
 };
+
+module.exports.getUserById = () => {
+  return async(req,res) => {
+    try {
+      const user = await User.findById(req.params.id);
+      if(!user) return res.status(404).send({
+        message:'User does not exist',
+        displayMessage:"",
+        data:null,
+        status:"Failed"
+      })
+      return res.status(202).send({
+        message:'User returned',
+        displayMessage:"",
+        data:_.pick("userName","email","tel",user),
+        status:"Success"
+      })
+    } catch (error) {
+      res.status(500).json({ error: "Something went wrong!" , message:error.message});
+    }
+  }
+}
